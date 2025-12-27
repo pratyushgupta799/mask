@@ -2,18 +2,32 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("Movement Settings")]
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float mouseSensitivityHorizontal = 2f;
     [SerializeField] private float mouseSensitivityVertical = 2f;
     [SerializeField] private float jumpForce = 5f;
+    
+    [Header("References")]
     [SerializeField] private Transform cam;
+    
+    [Header("Ground check")]
     [SerializeField] private Transform groundCheck;
     [SerializeField] private float groundDistance = 0.2f;
     [SerializeField] private LayerMask groundMask;
+
+    [Header("Wall Run")] 
+    [SerializeField] private float wallRunForce = 6f;
+    [SerializeField] private float wallCheckDistance = 0.6f;
+    [SerializeField] private LayerMask wallMask;
     
     private bool isGrounded;
     
     private int jumpCount = 0;
+
+    private bool isWallRunning = false;
+    private bool wallOnLeft;
+    private bool wallOnRight;
 
     float xRotation = 0f;
     Rigidbody rb;
@@ -28,6 +42,8 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         CheckGrounded();
+        CheckWall();
+        WallRun();
         CamMovement();
         PlayerMove();
         PlayerJump();
@@ -39,6 +55,43 @@ public class PlayerController : MonoBehaviour
         if (isGrounded)
         {
             jumpCount = 0;
+        }
+    }
+
+    private void CheckWall()
+    {
+        wallOnRight = Physics.Raycast(transform.position, transform.right, wallCheckDistance, wallMask);
+        wallOnLeft = Physics.Raycast(transform.position, -transform.right, wallCheckDistance, wallMask);
+        
+        if (wallOnRight || wallOnLeft)
+        {
+            Debug.Log("Wall running");
+            jumpCount = 0;
+        }
+    }
+
+    private void WallRun()
+    {
+        if ((wallOnLeft || wallOnRight) && !isGrounded && Input.GetAxis("Vertical") > 0.01f)
+        {
+            isWallRunning = true;
+            rb.useGravity = false;
+
+            Vector3 wallForward = Vector3.Cross(
+                wallOnRight ? transform.right : -transform.right,
+                Vector3.up
+            );
+
+            rb.linearVelocity = new Vector3(
+                wallForward.x * wallRunForce,
+                rb.linearVelocity.y,
+                wallForward.z * wallRunForce
+            );
+        }
+        else
+        {
+            isWallRunning = false;
+            rb.useGravity = true;
         }
     }
 
@@ -66,10 +119,19 @@ public class PlayerController : MonoBehaviour
 
     void PlayerJump()
     {
-        if (Input.GetButtonDown("Jump") && (isGrounded || jumpCount < 1))
+        if (Input.GetButtonDown("Jump") && (isGrounded || isWallRunning || jumpCount < 1))
         {
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            jumpCount++;
+            if (isWallRunning)
+            {
+                Vector3 jumpDir = Vector3.up + (wallOnRight ? -transform.right : transform.right);
+                rb.AddForce(jumpDir * jumpForce, ForceMode.Impulse);
+                isWallRunning = false;
+            }
+            else if (isGrounded)
+            {
+                rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+                jumpCount++;
+            }
         }
     }
 }
