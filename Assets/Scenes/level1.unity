@@ -622,6 +622,47 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
   m_EffectDistance: {x: 5.87, y: 5.79}
   m_UseGraphicAlpha: 1
+--- !u!1 &1429164399 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8075154967177581804, guid: d3f235d4c80611a4682af6951487d699, type: 3}
+  m_PrefabInstance: {fileID: 3312741781742697573}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1429164405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1429164399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 518b88afb2a0b024fa02370bb2968cf8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  healthBar: {fileID: 1754767620}
+--- !u!195 &1429164406
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1429164399}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 1
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &1705812914
 GameObject:
   m_ObjectHideFlags: 0
@@ -1199,11 +1240,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8650297367042302447, guid: d3f235d4c80611a4682af6951487d699, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1
+      value: 1.11
       objectReference: {fileID: 0}
     - target: {fileID: 8650297367042302447, guid: d3f235d4c80611a4682af6951487d699, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -9.33
+      value: -9.77
       objectReference: {fileID: 0}
     - target: {fileID: 8650297367042302447, guid: d3f235d4c80611a4682af6951487d699, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1236,7 +1277,13 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8075154967177581804, guid: d3f235d4c80611a4682af6951487d699, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1429164405}
+    - targetCorrespondingSourceObject: {fileID: 8075154967177581804, guid: d3f235d4c80611a4682af6951487d699, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1429164406}
   m_SourcePrefab: {fileID: 100100000, guid: d3f235d4c80611a4682af6951487d699, type: 3}
 --- !u!1001 &6957736453889744093
 PrefabInstance:

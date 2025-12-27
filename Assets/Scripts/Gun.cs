@@ -19,7 +19,7 @@ public class Gun : MonoBehaviour
     {
         if (Input.GetMouseButton(0))
         {
-            Debug.Log("Shoot");
+            // Debug.Log("Shoot");
             Shoot();
         }
     }
