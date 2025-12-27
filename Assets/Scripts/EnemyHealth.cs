@@ -2,10 +2,9 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class Health : MonoBehaviour
+public class EnemyHealth : MonoBehaviour
 {
     [SerializeField] private int maxHealth = 100;
-    [SerializeField] private Image healthBar;
     private int currentHealth;
     
     private void Start()
@@ -16,11 +15,11 @@ public class Health : MonoBehaviour
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
-        healthBar.fillAmount = (float)currentHealth / maxHealth;
-
+        Debug.Log("Enemy Health: " + currentHealth);
+        
         if (currentHealth <= 0)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            Destroy(gameObject);
         }
     }
 }

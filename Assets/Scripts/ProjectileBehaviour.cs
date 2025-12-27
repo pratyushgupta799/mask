@@ -8,8 +8,8 @@ public class ProjectileBehaviour : MonoBehaviour
         {
             if (other.tag == "Player")
             {
-                Debug.Log("Player shot");
-                other.gameObject.GetComponent<Health>().TakeDamage(20);
+                // Debug.Log("Player shot");
+                other.gameObject.GetComponent<PlayerHealth>().TakeDamage(20);
             }
             Invoke(nameof(DestroyObject), 0.1f);
         }

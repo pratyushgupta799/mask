@@ -38,6 +38,14 @@ public class Gun : MonoBehaviour
         if (Physics.Raycast(camRay, out RaycastHit camHit, 1000f, mask))
         {
             TrailRenderer trail = Instantiate(bulletTrail, bulletSpawnPoint.position, Quaternion.identity);
+            if (camHit.collider.gameObject.CompareTag("Enemy"))
+            {
+                EnemyHealth enemyHealth = camHit.collider.gameObject.GetComponent<EnemyHealth>();
+                if (enemyHealth != null)
+                {
+                    enemyHealth.TakeDamage(20);
+                }
+            }
             
             StartCoroutine(SpawnTrail(trail, camHit));
         }
