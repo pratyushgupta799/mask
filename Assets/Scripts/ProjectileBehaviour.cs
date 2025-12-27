@@ -6,6 +6,10 @@ public class ProjectileBehaviour : MonoBehaviour
     {
         if (other.tag != "Enemy")
         {
+            if (other.tag != "Player")
+            {
+                other.gameObject.GetComponent<Health>().TakeDamage(20);
+            }
             Invoke(nameof(DestroyObject), 0.1f);
         }
     }
