@@ -20,6 +20,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float wallRunForce = 6f;
     [SerializeField] private float wallCheckDistance = 0.6f;
     [SerializeField] private LayerMask wallMask;
+    [SerializeField] private float camereTilt = 5f;
+    [SerializeField] private float tiltSpeed = 8f;
+
+    private float currentTilt;
     
     private bool isGrounded;
     
@@ -76,11 +80,9 @@ public class PlayerController : MonoBehaviour
         {
             isWallRunning = true;
             rb.useGravity = false;
-
-            Vector3 wallForward = Vector3.Cross(
-                wallOnRight ? transform.right : -transform.right,
-                Vector3.up
-            );
+            
+            Vector3 wallNormal = wallOnRight ? transform.right : -transform.right;
+            Vector3 wallForward = Vector3.Cross(Vector3.up, wallNormal).normalized;
 
             rb.linearVelocity = new Vector3(
                 wallForward.x * wallRunForce,
@@ -112,22 +114,29 @@ public class PlayerController : MonoBehaviour
 
         xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+        
+        float targetTilt = 0f;
+        if (isWallRunning)
+            targetTilt = wallOnRight ? camereTilt : -camereTilt;
+        
+        currentTilt = Mathf.Lerp(currentTilt, targetTilt, tiltSpeed * Time.deltaTime);
 
-        cam.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+        cam.localRotation = Quaternion.Euler(xRotation, 0f, currentTilt);
         transform.Rotate(Vector3.up * mouseX);
     }
 
     void PlayerJump()
     {
-        if (Input.GetButtonDown("Jump") && (isGrounded || isWallRunning || jumpCount < 1))
+        if (Input.GetButtonDown("Jump"))
         {
             if (isWallRunning)
             {
                 Vector3 jumpDir = Vector3.up + (wallOnRight ? -transform.right : transform.right);
                 rb.AddForce(jumpDir * jumpForce, ForceMode.Impulse);
                 isWallRunning = false;
+                jumpCount++;
             }
-            else if (isGrounded)
+            else if (isGrounded || jumpCount < 1)
             {
                 rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
                 jumpCount++;
