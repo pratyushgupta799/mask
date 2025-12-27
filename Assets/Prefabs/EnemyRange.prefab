@@ -137,11 +137,10 @@ MonoBehaviour:
     m_Bits: 8
   timeBetweenAttacks: 2
   bulletPrefab: {fileID: 5423351745336262743, guid: d0732e5e3690f454396bfa9f4c1c7577, type: 3}
-  bulletForwardForce: 20
+  bulletForwardForce: 100
   bulletUpwardForce: 8
   attackRange: 3.7
   playerInAttackRange: 0
-  health: 100
 --- !u!195 &1416673294432757778
 NavMeshAgent:
   m_ObjectHideFlags: 0

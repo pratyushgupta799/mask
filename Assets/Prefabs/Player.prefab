@@ -271,6 +271,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   playerCamera: {fileID: 2663358629605914626}
+  shootDamage: 20
+  runDamage: 10
+  playerController: {fileID: 0}
 --- !u!1 &6538188259810472481
 GameObject:
   m_ObjectHideFlags: 0
@@ -455,23 +458,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd5ec4c9e664ea94fb3e4ee6db5ae9ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 1500
+  moveSpeedRun: 5
+  moveSpeedShoot: 2
   mouseSensitivityHorizontal: 2
   mouseSensitivityVertical: 2
   jumpForce: 5
   cam: {fileID: 3399777556869533625}
+  maskUI: {fileID: 0}
   groundCheck: {fileID: 1537639000342584022}
   groundDistance: 0.2
   groundMask:
     serializedVersion: 2
     m_Bits: 64
-  wallRunForce: 6
+  wallRunForce: 9
   wallCheckDistance: 0.6
   wallMask:
     serializedVersion: 2
     m_Bits: 128
   camereTilt: 15
   tiltSpeed: 8
+  healPerSecond: 2
 --- !u!1001 &1174578221202483321
 PrefabInstance:
   m_ObjectHideFlags: 0
