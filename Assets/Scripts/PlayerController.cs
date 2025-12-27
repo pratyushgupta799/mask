@@ -1,15 +1,19 @@
 using UnityEngine;
+using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
     [Header("Movement Settings")]
-    [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private float moveSpeedRun = 5f;
+    [SerializeField] private float moveSpeedShoot = 2f;
     [SerializeField] private float mouseSensitivityHorizontal = 2f;
     [SerializeField] private float mouseSensitivityVertical = 2f;
     [SerializeField] private float jumpForce = 5f;
     
     [Header("References")]
     [SerializeField] private Transform cam;
+    [SerializeField] private Text maskUI;
     
     [Header("Ground check")]
     [SerializeField] private Transform groundCheck;
@@ -23,6 +27,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float camereTilt = 5f;
     [SerializeField] private float tiltSpeed = 8f;
 
+    [Header("Heal")] 
+    [SerializeField] private int healPerSecond = 5;
+
     private float currentTilt;
     
     private bool isGrounded;
@@ -35,22 +42,57 @@ public class PlayerController : MonoBehaviour
 
     float xRotation = 0f;
     Rigidbody rb;
+    
+    public enum Mask
+    {
+        Shoot,
+        Run,
+        Heal
+    }
+
+    private Mask currentMask;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
         Cursor.lockState = CursorLockMode.Locked;
+
+        currentMask = Mask.Shoot;
+        maskUI.text = "Mask: " + currentMask;
+        // Debug.Log(currentMask);
     }
 
     void Update()
     {
+        ReadScroll();
         CheckGrounded();
         CheckWall();
         WallRun();
         CamMovement();
         PlayerMove();
         PlayerJump();
+        Heal();
+    }
+
+    private void ReadScroll()
+    {
+        float scroll = Input.GetAxis("Mouse ScrollWheel");
+        if (scroll == 0f) return;
+        
+        if (scroll > 0f)
+        {
+            // Debug.Log("Mouse scroll up");
+            currentMask = (Mask)(((int)currentMask + 1) % 3);
+        }
+        else if (scroll < 0f)
+        {
+            // Debug.Log("Mouse scroll down");
+            currentMask = (Mask)(((int)currentMask - 1 + 3) % 3);
+        }
+        
+        maskUI.text = "Mask: " + currentMask;
+        // Debug.Log(currentMask);
     }
 
     private void CheckGrounded()
@@ -103,8 +145,17 @@ public class PlayerController : MonoBehaviour
         float z = Input.GetAxis("Vertical");
 
         Vector3 move = transform.right * x + transform.forward * z;
-        rb.linearVelocity = new Vector3(move.x * moveSpeed * Time.deltaTime, rb.linearVelocity.y,
-            move.z * moveSpeed * Time.deltaTime);
+
+        if (currentMask == Mask.Run)
+        {
+            rb.linearVelocity = new Vector3(move.x * moveSpeedRun * Time.deltaTime, rb.linearVelocity.y,
+                        move.z * moveSpeedRun * Time.deltaTime);
+        }
+        else if (currentMask == Mask.Shoot)
+        {
+            rb.linearVelocity = new Vector3(move.x * moveSpeedShoot * Time.deltaTime, rb.linearVelocity.y,
+                move.z * moveSpeedShoot * Time.deltaTime);
+        }
     }
 
     void CamMovement()
@@ -142,5 +193,18 @@ public class PlayerController : MonoBehaviour
                 jumpCount++;
             }
         }
+    }
+
+    private void Heal()
+    {
+        if (currentMask == Mask.Heal)
+        {
+            gameObject.GetComponent<PlayerHealth>().Heal(healPerSecond * Time.deltaTime);
+        }
+    }
+
+    public Mask GetCurrentMask()
+    {
+        return currentMask;
     }
 }

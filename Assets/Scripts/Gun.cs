@@ -12,12 +12,15 @@ public class Gun : MonoBehaviour
     [SerializeField] private float shootDelay = 0.1f;
     [SerializeField] private LayerMask mask;
     [SerializeField] private Camera playerCamera;
+    [SerializeField] private int shootDamage = 20;
+    [SerializeField] private int runDamage = 10;
+    [SerializeField] private PlayerController playerController;
 
     private float lastShootTime;
 
     private void Update()
     {
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0) && (playerController.GetCurrentMask() != PlayerController.Mask.Heal))
         {
             // Debug.Log("Shoot");
             Shoot();
@@ -43,7 +46,14 @@ public class Gun : MonoBehaviour
                 Enemy enemy = camHit.collider.gameObject.GetComponent<Enemy>();
                 if (enemy != null)
                 {
-                    enemy.TakeDamage(20);
+                    if (playerController.GetCurrentMask() == PlayerController.Mask.Shoot)
+                    {
+                        enemy.TakeDamage(shootDamage);
+                    }
+                    else
+                    {
+                        enemy.TakeDamage(runDamage);
+                    }
                 }
             }
             

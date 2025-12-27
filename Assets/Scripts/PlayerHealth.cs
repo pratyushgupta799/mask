@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -6,7 +7,7 @@ public class PlayerHealth : MonoBehaviour
 {
     [SerializeField] private int maxHealth = 100;
     [SerializeField] private Image healthBar;
-    private int currentHealth;
+    private float currentHealth;
     
     private void Start()
     {
@@ -16,11 +17,17 @@ public class PlayerHealth : MonoBehaviour
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
-        healthBar.fillAmount = (float)currentHealth / maxHealth;
+        healthBar.fillAmount = currentHealth / maxHealth;
 
         if (currentHealth <= 0)
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
+    }
+
+    public void Heal(float health)
+    {
+        currentHealth = Math.Min(currentHealth + health, maxHealth);
+        healthBar.fillAmount = currentHealth / maxHealth;
     }
 }
