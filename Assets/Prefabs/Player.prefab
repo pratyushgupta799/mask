@@ -464,7 +464,14 @@ MonoBehaviour:
   groundDistance: 0.2
   groundMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
+  wallRunForce: 6
+  wallCheckDistance: 0.6
+  wallMask:
+    serializedVersion: 2
+    m_Bits: 128
+  camereTilt: 5
+  tiltSpeed: 8
 --- !u!1001 &1174578221202483321
 PrefabInstance:
   m_ObjectHideFlags: 0

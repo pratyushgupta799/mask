@@ -69,7 +69,7 @@ public class PlayerController : MonoBehaviour
         
         if (wallOnRight || wallOnLeft)
         {
-            Debug.Log("Wall running");
+            // Debug.Log("Wall running");
             jumpCount = 0;
         }
     }
