@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 7935747852945208868}
   - component: {fileID: 7534663783717341398}
   - component: {fileID: 5911369194174023045}
-  - component: {fileID: 8823042748139279343}
   m_Layer: 0
   m_Name: EnemyMelee
   m_TagString: Enemy
@@ -125,6 +124,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f51acbac48900154c89bd471820b3c9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 0
+  cost: 1
+  health: 100
   agent: {fileID: 5911369194174023045}
   target: {fileID: 0}
   groundLayer:
@@ -147,7 +149,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.31
-  m_Speed: 3.5
+  m_Speed: 5
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -159,16 +161,3 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &8823042748139279343
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1987702542179649859}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 650ea5860deac5b428229b1c347667ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 100

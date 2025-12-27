@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyMeleeAI : MonoBehaviour
+public class EnemyMeleeAI : Enemy
 {
     [SerializeField] private NavMeshAgent agent;
     [SerializeField] private Transform target;
@@ -14,9 +14,6 @@ public class EnemyMeleeAI : MonoBehaviour
     [Header("States")]
     [SerializeField] private float attackRange;
     public bool playerInAttackRange;
-    
-    [Header("Health")]
-    [SerializeField] private int health = 100;
     
     // Attacking
     bool alreadyAttacked;
@@ -51,12 +48,12 @@ public class EnemyMeleeAI : MonoBehaviour
         agent.isStopped = false;
         agent.updatePosition = true;
         agent.SetDestination(target.position);
-        Debug.Log("Chasing");
+        // Debug.Log("Chasing");
     }
 
     private void AttackPlayer()
     {
-        Debug.Log("Attacking");
+        // Debug.Log("Attacking");
         agent.isStopped = true;
         agent.updatePosition = false; 
         agent.velocity = Vector3.zero;

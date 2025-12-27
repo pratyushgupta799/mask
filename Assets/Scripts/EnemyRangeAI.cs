@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyRangeAI : MonoBehaviour
+public class EnemyRangeAI : Enemy
 {
     [SerializeField] private NavMeshAgent agent;
     [SerializeField] private Transform target;
@@ -17,9 +17,6 @@ public class EnemyRangeAI : MonoBehaviour
     [Header("States")]
     [SerializeField] private float attackRange;
     public bool playerInAttackRange;
-    
-    [Header("Health")]
-    [SerializeField] private int health = 100;
     
     // Attacking
     bool alreadyAttacked;

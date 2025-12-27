@@ -40,10 +40,10 @@ public class Gun : MonoBehaviour
             TrailRenderer trail = Instantiate(bulletTrail, bulletSpawnPoint.position, Quaternion.identity);
             if (camHit.collider.gameObject.CompareTag("Enemy"))
             {
-                EnemyHealth enemyHealth = camHit.collider.gameObject.GetComponent<EnemyHealth>();
-                if (enemyHealth != null)
+                Enemy enemy = camHit.collider.gameObject.GetComponent<Enemy>();
+                if (enemy != null)
                 {
-                    enemyHealth.TakeDamage(20);
+                    enemy.TakeDamage(20);
                 }
             }
             

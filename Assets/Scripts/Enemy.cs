@@ -1,16 +1,26 @@
+using GlobalData;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    public EnemyType type;
+    public int cost = 1;
+    public int health = 100;
 
-    // Update is called once per frame
-    void Update()
+    public static System.Action<Enemy> OnEnemyKilled;
+
+    public void TakeDamage(int dmg)
     {
-        
+        health -= dmg;
+        if (health <= 0)
+        {
+            Die();
+        }
+    }
+    
+    private void Die()
+    {
+        OnEnemyKilled?.Invoke(this);
+        Destroy(gameObject);
     }
 }
