@@ -470,7 +470,7 @@ MonoBehaviour:
   wallMask:
     serializedVersion: 2
     m_Bits: 128
-  camereTilt: 5
+  camereTilt: 15
   tiltSpeed: 8
 --- !u!1001 &1174578221202483321
 PrefabInstance:
