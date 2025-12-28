@@ -15,7 +15,9 @@ public class Gun : MonoBehaviour
     [SerializeField] private LayerMask mask;
     [SerializeField] private Camera playerCamera;
     [SerializeField] private int shootDamage = 20;
+    [SerializeField] private int shootDamageHead = 60;
     [SerializeField] private int runDamage = 10;
+    [SerializeField] private int runDamageHead = 30;
     [SerializeField] private PlayerController playerController;
 
     private float lastShootTime;
@@ -66,11 +68,11 @@ public class Gun : MonoBehaviour
                 {
                     if (playerController.GetCurrentMask() == PlayerController.Mask.Shoot)
                     {
-                        enemy.TakeDamage(shootDamage + 40);
+                        enemy.TakeDamage(shootDamageHead);
                     }
                     else
                     {
-                        enemy.TakeDamage(runDamage + 30);
+                        enemy.TakeDamage(runDamageHead);
                     }
                 }
             }
