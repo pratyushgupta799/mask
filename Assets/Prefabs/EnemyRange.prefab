@@ -69,6 +69,7 @@ GameObject:
   - component: {fileID: 2360354708940882218}
   - component: {fileID: 7138843901331429165}
   - component: {fileID: 1416673294432757778}
+  - component: {fileID: 3223800743242633994}
   m_Layer: 0
   m_Name: EnemyRange
   m_TagString: Enemy
@@ -196,9 +197,9 @@ MonoBehaviour:
     m_Bits: 8
   timeBetweenAttacks: 2
   bulletPrefab: {fileID: 5423351745336262743, guid: d0732e5e3690f454396bfa9f4c1c7577, type: 3}
-  bulletForwardForce: 100
+  bulletForwardForce: 15
   bulletUpwardForce: 8
-  attackRange: 17.9
+  attackRange: 19.8
   playerInAttackRange: 0
 --- !u!195 &1416673294432757778
 NavMeshAgent:
@@ -222,6 +223,20 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &3223800743242633994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1863399539374436256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19af4a550cda9d64dafbaa98ae9814e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  amplitude: 0.05
+  frequency: 4
 --- !u!1 &2326590283477100192
 GameObject:
   m_ObjectHideFlags: 0

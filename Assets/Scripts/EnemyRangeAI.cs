@@ -12,7 +12,6 @@ public class EnemyRangeAI : Enemy
     [SerializeField] private float timeBetweenAttacks;
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private float bulletForwardForce = 20f;
-    [SerializeField] private float bulletUpwardForce = 8f;
     
     [Header("States")]
     [SerializeField] private float attackRange;
@@ -65,9 +64,9 @@ public class EnemyRangeAI : Enemy
         if (!alreadyAttacked)
         {
             Rigidbody rb = Instantiate(bulletPrefab, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
-            
+
+            rb.useGravity = false;
             rb.AddForce(transform.forward * bulletForwardForce, ForceMode.Impulse);
-            rb.AddForce(transform.up * bulletUpwardForce, ForceMode.Impulse);
             
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);

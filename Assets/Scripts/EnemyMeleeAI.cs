@@ -15,6 +15,8 @@ public class EnemyMeleeAI : Enemy
     [SerializeField] private float attackRange;
     public bool playerInAttackRange;
     
+    private Floating floating;
+    
     // Attacking
     bool alreadyAttacked;
 
@@ -23,6 +25,7 @@ public class EnemyMeleeAI : Enemy
     private void Awake()
     {
         target = GameObject.FindGameObjectWithTag("Player").transform;
+        floating = GetComponent<Floating>();
     }
 
     private void Update()
@@ -51,10 +54,12 @@ public class EnemyMeleeAI : Enemy
         
         if (playerInAttackRange)
         {
+            floating.SetFloatable(false);
             AttackPlayer();
         }
         else
         {
+            floating.SetFloatable(true);
             ChasePlayer();
         }
     }
