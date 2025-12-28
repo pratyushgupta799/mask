@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Enemy
   - GameOverScreen
+  - Head
+  - Body
   layers:
   - Default
   - TransparentFX

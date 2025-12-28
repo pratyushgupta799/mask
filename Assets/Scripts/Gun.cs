@@ -59,9 +59,24 @@ public class Gun : MonoBehaviour
         {
             trail = Instantiate(trailType, bulletSpawnPoint.position, Quaternion.identity);
             
-            if (camHit.collider.gameObject.CompareTag("Enemy"))
+            if (camHit.collider.gameObject.CompareTag("Head"))
             {
-                Enemy enemy = camHit.collider.gameObject.GetComponent<Enemy>();
+                Enemy enemy = camHit.collider.gameObject.GetComponentInParent<Enemy>();
+                if (enemy != null)
+                {
+                    if (playerController.GetCurrentMask() == PlayerController.Mask.Shoot)
+                    {
+                        enemy.TakeDamage(shootDamage + 40);
+                    }
+                    else
+                    {
+                        enemy.TakeDamage(runDamage + 30);
+                    }
+                }
+            }
+            else if (camHit.collider.gameObject.CompareTag("Body"))
+            {
+                Enemy enemy = camHit.collider.gameObject.GetComponentInParent<Enemy>();
                 if (enemy != null)
                 {
                     if (playerController.GetCurrentMask() == PlayerController.Mask.Shoot)
