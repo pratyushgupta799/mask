@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform groundCheck;
     [SerializeField] private float groundDistance = 0.2f;
     [SerializeField] private LayerMask groundMask;
+    [SerializeField] private LayerMask playerMask;
 
     [Header("Wall Run")] 
     [SerializeField] float wallJumpUpForce = 6f;
@@ -127,7 +128,7 @@ public class PlayerController : MonoBehaviour
 
     private void CheckGrounded()
     {
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, ~playerMask);
         if (isGrounded)
         {
             jumpCount = 0;
