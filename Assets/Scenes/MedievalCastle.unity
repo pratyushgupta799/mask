@@ -443,6 +443,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 39277468}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &42069569 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6516829587554808387, guid: d3f235d4c80611a4682af6951487d699, type: 3}
+  m_PrefabInstance: {fileID: 1236623670}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &47575534
 GameObject:
   m_ObjectHideFlags: 0
@@ -10902,16 +10907,20 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1171982520576115821, guid: d3f235d4c80611a4682af6951487d699, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.1
+      value: 0.14
       objectReference: {fileID: 0}
     - target: {fileID: 1171982520576115821, guid: d3f235d4c80611a4682af6951487d699, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.227
+      value: 0.443
       objectReference: {fileID: 0}
     - target: {fileID: 1171982520576115821, guid: d3f235d4c80611a4682af6951487d699, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.07
+      value: 0.219
       objectReference: {fileID: 0}
+    - target: {fileID: 2247777541120649617, guid: d3f235d4c80611a4682af6951487d699, type: 3}
+      propertyPath: gun
+      value: 
+      objectReference: {fileID: 42069569}
     - target: {fileID: 2247777541120649617, guid: d3f235d4c80611a4682af6951487d699, type: 3}
       propertyPath: maskUI
       value: 
@@ -10928,6 +10937,22 @@ PrefabInstance:
       propertyPath: moveSpeedShoot
       value: 500
       objectReference: {fileID: 0}
+    - target: {fileID: 2247777541120649617, guid: d3f235d4c80611a4682af6951487d699, type: 3}
+      propertyPath: wallJumpSideForce
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2964830299479391992, guid: d3f235d4c80611a4682af6951487d699, type: 3}
+      propertyPath: shootDelay
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2964830299479391992, guid: d3f235d4c80611a4682af6951487d699, type: 3}
+      propertyPath: mask.m_Bits
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 2964830299479391992, guid: d3f235d4c80611a4682af6951487d699, type: 3}
+      propertyPath: bulletTrailThick
+      value: 
+      objectReference: {fileID: 328621789431213768, guid: 5d7a9db08fdbf9e49a9989c182f5e416, type: 3}
     - target: {fileID: 2964830299479391992, guid: d3f235d4c80611a4682af6951487d699, type: 3}
       propertyPath: playerController
       value: 

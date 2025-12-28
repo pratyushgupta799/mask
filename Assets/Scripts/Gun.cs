@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Gun : MonoBehaviour
@@ -9,6 +10,7 @@ public class Gun : MonoBehaviour
     [SerializeField] private Transform bulletSpawnPoint;
     [SerializeField] private ParticleSystem impactParticleSystem;
     [SerializeField] private TrailRenderer bulletTrail;
+    [SerializeField] private TrailRenderer bulletTrailThick;
     [SerializeField] private float shootDelay = 0.1f;
     [SerializeField] private LayerMask mask;
     [SerializeField] private Camera playerCamera;
@@ -17,6 +19,11 @@ public class Gun : MonoBehaviour
     [SerializeField] private PlayerController playerController;
 
     private float lastShootTime;
+
+    private void Awake()
+    {
+        playerController = GetComponentInParent<PlayerController>();
+    }
 
     private void Update()
     {
@@ -37,10 +44,21 @@ public class Gun : MonoBehaviour
 
         Ray camRay = playerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f));
         Vector3 targetPoint;
+        TrailRenderer trailType;
+        if (playerController.GetCurrentMask() == PlayerController.Mask.Shoot)
+        {
+            trailType = bulletTrailThick;
+        }
+        else
+        {
+            trailType = bulletTrail;
+        }
+        TrailRenderer trail;
 
         if (Physics.Raycast(camRay, out RaycastHit camHit, 1000f, mask))
         {
-            TrailRenderer trail = Instantiate(bulletTrail, bulletSpawnPoint.position, Quaternion.identity);
+            trail = Instantiate(trailType, bulletSpawnPoint.position, Quaternion.identity);
+            
             if (camHit.collider.gameObject.CompareTag("Enemy"))
             {
                 Enemy enemy = camHit.collider.gameObject.GetComponent<Enemy>();
@@ -62,12 +80,9 @@ public class Gun : MonoBehaviour
         else
         {
             targetPoint = camRay.origin + camRay.direction * 100f;
-            TrailRenderer trail = Instantiate(bulletTrail, bulletSpawnPoint.position, Quaternion.identity);
-            
+            trail = Instantiate(trailType, bulletSpawnPoint.position, Quaternion.identity);
             StartCoroutine(SpawnTrail(trail, targetPoint));
         }
-
-        
 
         lastShootTime = Time.time;
     }
@@ -93,7 +108,7 @@ public class Gun : MonoBehaviour
         float time = 0;
         Vector3 startPosition = trail.transform.position;
 
-        while (time < 1)
+        while (time < 1000f)
         {
             trail.transform.position = Vector3.Lerp(startPosition, hit.point, time);
             time += Time.deltaTime / trail.time;
@@ -108,10 +123,11 @@ public class Gun : MonoBehaviour
     
     private IEnumerator SpawnTrail(TrailRenderer trail, Vector3 targetPoint)
     {
+        float timeToTravel = Vector3.Distance(bulletSpawnPoint.position, targetPoint) / 500f;
         float time = 0;
         Vector3 startPosition = trail.transform.position;
 
-        while (time < 10)
+        while (time < timeToTravel)
         {
             trail.transform.position = Vector3.Lerp(startPosition, targetPoint, time);
             time += Time.deltaTime / trail.time;

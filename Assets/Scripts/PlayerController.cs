@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     [Header("References")]
     [SerializeField] private Transform cam;
     [SerializeField] private Text maskUI;
+    [SerializeField] private GameObject gun;
     
     [Header("Ground check")]
     [SerializeField] private Transform groundCheck;
@@ -21,16 +22,21 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask groundMask;
 
     [Header("Wall Run")] 
+    [SerializeField] float wallJumpUpForce = 6f;
+    [SerializeField] float wallJumpSideForce = 3f;
     [SerializeField] private float wallRunForce = 6f;
     [SerializeField] private float wallCheckDistance = 0.6f;
     [SerializeField] private LayerMask wallMask;
     [SerializeField] private float camereTilt = 5f;
     [SerializeField] private float tiltSpeed = 8f;
+    [SerializeField] private float wallRunCooldown = 1f;
 
     [Header("Heal")] 
     [SerializeField] private int healPerSecond = 5;
 
     private float currentTilt;
+
+    private float wallRunCooldownTimer;
     
     private bool isGrounded;
     
@@ -66,6 +72,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         ReadScroll();
+        ReadMask();
         CheckGrounded();
         CheckWall();
         WallRun();
@@ -73,6 +80,24 @@ public class PlayerController : MonoBehaviour
         PlayerMove();
         PlayerJump();
         Heal();
+    }
+
+    private void ReadMask()
+    {
+        if (currentMask == Mask.Heal)
+        {
+            if (gun.activeInHierarchy)
+            {
+                gun.SetActive(false);
+            }
+        }
+        else
+        {
+            if (!gun.activeInHierarchy)
+            {
+                gun.SetActive(true);
+            }
+        }
     }
 
     private void ReadScroll()
@@ -106,13 +131,31 @@ public class PlayerController : MonoBehaviour
 
     private void CheckWall()
     {
-        wallOnRight = Physics.Raycast(transform.position, transform.right, wallCheckDistance, wallMask);
-        wallOnLeft = Physics.Raycast(transform.position, -transform.right, wallCheckDistance, wallMask);
-        
+        if (wallRunCooldownTimer == 0f)
+        {
+            wallOnRight = Physics.Raycast(transform.position, transform.right, wallCheckDistance, wallMask);
+            wallOnLeft = Physics.Raycast(transform.position, -transform.right, wallCheckDistance, wallMask);
+        }
+        else
+        { 
+            wallOnLeft = false;
+            wallOnRight = false;
+        }
+
         if (wallOnRight || wallOnLeft)
         {
             // Debug.Log("Wall running");
             jumpCount = 0;
+        }
+
+        if (!wallOnLeft && !wallOnRight)
+        {
+            if (wallRunCooldownTimer > 0f)
+            {
+                wallRunCooldownTimer -= Time.deltaTime;
+                if (wallRunCooldownTimer < 0f)
+                    wallRunCooldownTimer = 0f;
+            }
         }
     }
 
@@ -182,9 +225,17 @@ public class PlayerController : MonoBehaviour
         {
             if (isWallRunning)
             {
-                Vector3 jumpDir = Vector3.up + (wallOnRight ? -transform.right : transform.right);
-                rb.AddForce(jumpDir * jumpForce, ForceMode.Impulse);
+                Vector3 sideDir = wallOnRight ? -transform.right : transform.right;
+
+                Vector3 jumpForceVec =
+                    Vector3.up * wallJumpUpForce +
+                    sideDir * wallJumpSideForce;
+
+                rb.AddForce(jumpForceVec, ForceMode.Impulse);
+
                 isWallRunning = false;
+                wallRunCooldownTimer = wallRunCooldown;
+                
                 jumpCount++;
             }
             else if (isGrounded || jumpCount < 1)
