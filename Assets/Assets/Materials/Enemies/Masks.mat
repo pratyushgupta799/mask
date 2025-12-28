@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: StoneBricks
+  m_Name: Masks
   m_Shader: {fileID: -6465566751694194690, guid: 452bf951c71d55a4c931d4887cb23310, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -77,7 +77,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Texture:
-        m_Texture: {fileID: 2800000, guid: ca47e73741689d843b9ea4acd92105c2, type: 3}
+        m_Texture: {fileID: 2800000, guid: ecd5497753586d342b0b9a686cd2e4cd, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -115,7 +115,7 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _MaskColorTint: 1
+    - _MaskColorTint: 0
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005

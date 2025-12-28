@@ -44,8 +44,8 @@ Camera:
   m_GameObject: {fileID: 1471864870795434598}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -266,6 +266,7 @@ MonoBehaviour:
   bulletSpawnPoint: {fileID: 1171982520576115821}
   impactParticleSystem: {fileID: 411493812303278255, guid: 01e2c21d20aad2341aa68864306fb2cb, type: 3}
   bulletTrail: {fileID: 328621789431213768, guid: 43559d27d223bf340b413fde1315c256, type: 3}
+  bulletTrailThick: {fileID: 0}
   shootDelay: 0.1
   mask:
     serializedVersion: 2
@@ -465,11 +466,14 @@ MonoBehaviour:
   jumpForce: 5
   cam: {fileID: 3399777556869533625}
   maskUI: {fileID: 0}
+  gun: {fileID: 0}
   groundCheck: {fileID: 1537639000342584022}
   groundDistance: 0.2
   groundMask:
     serializedVersion: 2
     m_Bits: 64
+  wallJumpUpForce: 6
+  wallJumpSideForce: 3
   wallRunForce: 9
   wallCheckDistance: 0.6
   wallMask:
@@ -477,6 +481,7 @@ MonoBehaviour:
     m_Bits: 128
   camereTilt: 15
   tiltSpeed: 8
+  wallRunCooldown: 1
   healPerSecond: 2
 --- !u!1001 &1174578221202483321
 PrefabInstance:
