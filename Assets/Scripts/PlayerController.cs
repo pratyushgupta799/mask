@@ -58,6 +58,11 @@ public class PlayerController : MonoBehaviour
 
     private Mask currentMask;
 
+    void Awake()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -133,8 +138,22 @@ public class PlayerController : MonoBehaviour
     {
         if (wallRunCooldownTimer == 0f)
         {
-            wallOnRight = Physics.Raycast(transform.position, transform.right, wallCheckDistance, wallMask);
-            wallOnLeft = Physics.Raycast(transform.position, -transform.right, wallCheckDistance, wallMask);
+            wallOnRight = Physics.CapsuleCast(
+                transform.position,
+                transform.position + Vector3.up,
+                0.4f,
+                transform.right,
+                wallCheckDistance,
+                wallMask
+            );
+            wallOnLeft = Physics.CapsuleCast(
+                transform.position,
+                transform.position + Vector3.up,
+                0.4f,
+                -transform.right,
+                wallCheckDistance,
+                wallMask
+            );
         }
         else
         { 

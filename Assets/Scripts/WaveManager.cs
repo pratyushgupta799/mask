@@ -20,6 +20,8 @@ public class WaveManager : MonoBehaviour
     private int waveIndex = 0;
     private int aliveEnemies = 0;
 
+    private int totalKills = 0;
+
     void OnEnable()
     {
         Enemy.OnEnemyKilled += OnEnemyKilled;
@@ -33,6 +35,11 @@ public class WaveManager : MonoBehaviour
     private void Start()
     {
         StartNextWave();
+    }
+
+    private void Update()
+    {
+        EnemyUI.text = "Alive: " + aliveEnemies;
     }
     
     private void StartNextWave()
@@ -75,7 +82,7 @@ public class WaveManager : MonoBehaviour
     private void OnEnemyKilled(Enemy enemy)
     {
         aliveEnemies--;
-        EnemyUI.text = "Alive: " + aliveEnemies;
+        totalKills++;
         if (aliveEnemies <= 0)
         {
             StartNextWave();
@@ -104,5 +111,15 @@ public class WaveManager : MonoBehaviour
         }
 
         return valid[0];
+    }
+    
+    public int GetTotalKills()
+    {
+        return totalKills;
+    }
+
+    public int GetCurrentWave()
+    {
+        return waveIndex;
     }
 }

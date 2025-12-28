@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -8,6 +9,7 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private int maxHealth = 100;
     [SerializeField] private Image healthBar;
     private float currentHealth;
+    [SerializeField] private Image gameOverScreen;
     
     private void Start()
     {
@@ -21,7 +23,8 @@ public class PlayerHealth : MonoBehaviour
 
         if (currentHealth <= 0)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            Cursor.lockState = CursorLockMode.None;
+            gameOverScreen.gameObject.SetActive(true);
         }
     }
 
