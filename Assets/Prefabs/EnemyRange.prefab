@@ -198,7 +198,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 5423351745336262743, guid: d0732e5e3690f454396bfa9f4c1c7577, type: 3}
   bulletForwardForce: 100
   bulletUpwardForce: 8
-  attackRange: 3.7
+  attackRange: 17.9
   playerInAttackRange: 0
 --- !u!195 &1416673294432757778
 NavMeshAgent:

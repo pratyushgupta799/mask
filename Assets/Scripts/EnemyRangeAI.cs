@@ -21,6 +21,8 @@ public class EnemyRangeAI : Enemy
     // Attacking
     bool alreadyAttacked;
 
+    private bool playerInSight;
+
     private void Awake()
     {
         target = GameObject.FindGameObjectWithTag("Player").transform;
@@ -29,7 +31,7 @@ public class EnemyRangeAI : Enemy
     private void Update()
     {
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, playerLayer);
-        if (playerInAttackRange)
+        if (playerInAttackRange && PlayerInSight())
         {
             AttackPlayer();
         }
@@ -37,6 +39,16 @@ public class EnemyRangeAI : Enemy
         {
             ChasePlayer();
         }
+    }
+
+    private bool PlayerInSight()
+    {
+        Vector3 direction = target.position - transform.position;
+        if (Physics.Raycast(transform.position, direction, out RaycastHit hit, 1000f))
+        {
+            return hit.collider.gameObject.tag == "Player";
+        }
+        return false;
     }
 
     private void ChasePlayer()
