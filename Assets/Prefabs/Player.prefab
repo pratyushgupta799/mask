@@ -273,7 +273,9 @@ MonoBehaviour:
     m_Bits: 1
   playerCamera: {fileID: 2663358629605914626}
   shootDamage: 20
+  shootDamageHead: 60
   runDamage: 10
+  runDamageHead: 30
   playerController: {fileID: 0}
 --- !u!1 &6538188259810472481
 GameObject:
@@ -338,7 +340,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3399777556869533625}
   - {fileID: 1537639000342584022}
@@ -459,7 +461,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd5ec4c9e664ea94fb3e4ee6db5ae9ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeedRun: 5
+  moveSpeedRun: 3
   moveSpeedShoot: 2
   mouseSensitivityHorizontal: 2
   mouseSensitivityVertical: 2
@@ -469,9 +471,13 @@ MonoBehaviour:
   gun: {fileID: 0}
   groundCheck: {fileID: 1537639000342584022}
   groundDistance: 0.2
+  obstacleCheckDistance: 1
   groundMask:
     serializedVersion: 2
     m_Bits: 64
+  playerMask:
+    serializedVersion: 2
+    m_Bits: 0
   wallJumpUpForce: 6
   wallJumpSideForce: 3
   wallRunForce: 9
