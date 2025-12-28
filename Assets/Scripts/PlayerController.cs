@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
     [Header("Ground check")]
     [SerializeField] private Transform groundCheck;
     [SerializeField] private float groundDistance = 0.2f;
+    [SerializeField] private float obstacleCheckDistance = 1f;
     [SerializeField] private LayerMask groundMask;
     [SerializeField] private LayerMask playerMask;
 
@@ -181,19 +182,32 @@ public class PlayerController : MonoBehaviour
 
     private void WallRun()
     {
-        if ((wallOnLeft || wallOnRight) && !isGrounded && Input.GetAxis("Vertical") > 0.01f)
+        if ((wallOnLeft || wallOnRight))
         {
-            isWallRunning = true;
-            rb.useGravity = false;
-            
-            Vector3 wallNormal = wallOnRight ? transform.right : -transform.right;
-            Vector3 wallForward = Vector3.Cross(Vector3.up, wallNormal).normalized;
+            // Debug.Log("Wall Spotted");
+            if (!isGrounded && Input.GetAxis("Vertical") > 0.01f)
+            {
+                isWallRunning = true;
+                rb.useGravity = false;
 
-            rb.linearVelocity = new Vector3(
-                wallForward.x * wallRunForce,
-                rb.linearVelocity.y,
-                wallForward.z * wallRunForce
-            );
+                Vector3 wallNormal = wallOnRight ? -transform.right : transform.right;
+                Vector3 wallForward = Vector3.ProjectOnPlane(transform.forward, wallNormal).normalized;
+                
+                float input = Input.GetAxis("Vertical");
+                Vector3 moveAlongWall = wallForward * input * wallRunForce;
+
+                rb.linearVelocity = new Vector3(
+                    moveAlongWall.x,
+                    rb.linearVelocity.y,
+                    moveAlongWall.z
+                );
+            }
+            else
+            {
+                // Debug.Log("Wall there but not wall running");
+                isWallRunning = false;
+                rb.useGravity = true;
+            }
         }
         else
         {
@@ -204,20 +218,30 @@ public class PlayerController : MonoBehaviour
 
     void PlayerMove()
     {
-        float x = Input.GetAxis("Horizontal");
-        float z = Input.GetAxis("Vertical");
-
-        Vector3 move = transform.right * x + transform.forward * z;
-
-        if (currentMask == Mask.Run)
+        if (!isWallRunning)
         {
-            rb.linearVelocity = new Vector3(move.x * moveSpeedRun * Time.deltaTime, rb.linearVelocity.y,
-                        move.z * moveSpeedRun * Time.deltaTime);
-        }
-        else if (currentMask == Mask.Shoot)
-        {
-            rb.linearVelocity = new Vector3(move.x * moveSpeedShoot * Time.deltaTime, rb.linearVelocity.y,
-                move.z * moveSpeedShoot * Time.deltaTime);
+            float x = Input.GetAxis("Horizontal");
+            float z = Input.GetAxis("Vertical");
+
+            Vector3 move = transform.right * x + transform.forward * z;
+            
+            Vector3 moveDir = move.normalized;
+            if (Physics.Raycast(transform.position, moveDir, obstacleCheckDistance))
+            {
+                // Debug.Log("Something in way");
+                return;
+            }
+
+            if (currentMask == Mask.Run)
+            {
+                rb.linearVelocity = new Vector3(move.x * moveSpeedRun, rb.linearVelocity.y,
+                    move.z * moveSpeedRun);
+            }
+            else if (currentMask == Mask.Shoot)
+            {
+                rb.linearVelocity = new Vector3(move.x * moveSpeedShoot, rb.linearVelocity.y,
+                    move.z * moveSpeedShoot);
+            }
         }
     }
 

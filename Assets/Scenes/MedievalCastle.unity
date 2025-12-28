@@ -2486,7 +2486,7 @@ Transform:
   m_GameObject: {fileID: 959843946}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10, y: 1, z: -28}
+  m_LocalPosition: {x: 7.45, y: 1, z: -27.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2802,7 +2802,7 @@ Transform:
   m_GameObject: {fileID: 1115988286}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10, y: 1, z: -28}
+  m_LocalPosition: {x: -7.44, y: 1, z: -27.01}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3209,7 +3209,7 @@ PrefabInstance:
       objectReference: {fileID: 956811772}
     - target: {fileID: 2247777541120649617, guid: d3f235d4c80611a4682af6951487d699, type: 3}
       propertyPath: moveSpeedRun
-      value: 1000
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2247777541120649617, guid: d3f235d4c80611a4682af6951487d699, type: 3}
       propertyPath: healPerSecond
@@ -3217,7 +3217,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2247777541120649617, guid: d3f235d4c80611a4682af6951487d699, type: 3}
       propertyPath: moveSpeedShoot
-      value: 500
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2247777541120649617, guid: d3f235d4c80611a4682af6951487d699, type: 3}
       propertyPath: playerMask.m_Bits
@@ -4371,7 +4371,7 @@ Transform:
   m_GameObject: {fileID: 1601318273}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -12, y: 1, z: 28}
+  m_LocalPosition: {x: -11.59, y: 1, z: 22.55}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5402,7 +5402,7 @@ GameObject:
   - component: {fileID: 1957506374}
   m_Layer: 5
   m_Name: GameOver
-  m_TagString: Untagged
+  m_TagString: GameOverScreen
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5480,6 +5480,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveText: {fileID: 1473135293}
   killText: {fileID: 862579315}
+  highScoreText: {fileID: 1294318872}
   waveManager: {fileID: 1195717060}
 --- !u!1 &1981659314
 GameObject:
