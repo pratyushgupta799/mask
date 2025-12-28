@@ -18,6 +18,8 @@ public class EnemyMeleeAI : Enemy
     // Attacking
     bool alreadyAttacked;
 
+    private bool playerInAttackRangeThisFrame;
+
     private void Awake()
     {
         target = GameObject.FindGameObjectWithTag("Player").transform;
@@ -27,11 +29,25 @@ public class EnemyMeleeAI : Enemy
     {
         Physics.CheckSphere(transform.position, attackRange, playerLayer);
         float dist = Vector3.Distance(transform.position, target.position);
-        
+
         if (dist <= attackRange)
+        {
+            if (playerInAttackRange != true)
+            {
+                playerInAttackRangeThisFrame = true;
+            }
+            else
+            {
+                playerInAttackRangeThisFrame = false;
+            }
+
             playerInAttackRange = true;
+        }
         else
+        {
             playerInAttackRange = false;
+            playerInAttackRangeThisFrame = false;
+        }
         
         if (playerInAttackRange)
         {
@@ -60,6 +76,12 @@ public class EnemyMeleeAI : Enemy
         
         transform.LookAt(target);
 
+        if (playerInAttackRangeThisFrame)
+        {
+            alreadyAttacked = true;
+            Invoke(nameof(ResetAttack), timeBetweenAttacks);
+        }
+        
         if (!alreadyAttacked)
         {
             target.GetComponent<PlayerHealth>().TakeDamage(40);
