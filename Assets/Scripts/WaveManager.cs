@@ -22,6 +22,8 @@ public class WaveManager : MonoBehaviour
     private int waveIndex = 0;
     private readonly HashSet<Enemy> aliveEnemies = new();
 
+    private bool waveQueued;
+
     private int totalKills = 0;
 
     void OnEnable()
@@ -46,6 +48,7 @@ public class WaveManager : MonoBehaviour
     
     private void StartNextWave()
     {
+        waveQueued = false;
         waveIndex++;
         if (waveIndex > GameManager.Instance.highestWave)
         {
@@ -93,9 +96,11 @@ public class WaveManager : MonoBehaviour
     {
         aliveEnemies.Remove(enemy);
         totalKills++;
-        if (aliveEnemies.Count <= 0 && !waveSpawning)
+
+        if (aliveEnemies.Count == 0 && !waveSpawning && !waveQueued)
         {
-            Invoke(nameof(StartNextWave), 3);
+            waveQueued = true;
+            Invoke(nameof(StartNextWave), 3f);
         }
     }
 
