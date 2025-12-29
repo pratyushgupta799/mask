@@ -20,6 +20,7 @@ public class Enemy : MonoBehaviour
     
     private void Die()
     {
+        AudioManager.Instance.PlayGhostDeath(transform.position);
         OnEnemyKilled?.Invoke(this);
         Destroy(gameObject);
     }

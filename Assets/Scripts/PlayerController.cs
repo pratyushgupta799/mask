@@ -1,3 +1,4 @@
+using System;
 using TMPro.SpriteAssetUtilities;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -61,6 +62,8 @@ public class PlayerController : MonoBehaviour
 
     float xRotation = 0f;
     Rigidbody rb;
+
+    private bool isMoving;
     
     public enum Mask
     {
@@ -107,6 +110,23 @@ public class PlayerController : MonoBehaviour
         PlayerMove();
         PlayerJump();
         Heal();
+
+        if (Math.Abs(rb.linearVelocity.x) + Math.Abs(rb.angularVelocity.z) > 0.1f)
+        {
+            if (!isMoving)
+            {
+                AudioManager.Instance.StartPlayPlayerWalk();
+            }
+            isMoving = true;
+        }
+        else
+        {
+            if (isMoving)
+            {
+                AudioManager.Instance.StopPlayPlayerWalk();
+            }
+            isMoving = false;
+        }
     }
 
     private void ReadMask()

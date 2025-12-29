@@ -18,6 +18,7 @@ public class PlayerHealth : MonoBehaviour
     
     public void TakeDamage(int damage)
     {
+        AudioManager.Instance.PlayPlayerHurt();
         currentHealth -= damage;
         healthBar.fillAmount = currentHealth / maxHealth;
 

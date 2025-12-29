@@ -21,6 +21,14 @@ public class MagicProjectile : MonoBehaviour
     public void SetPlayerBullet(bool value)
     {
         isPlayerBullet = value;
+        if (isPlayerBullet)
+        {
+            AudioManager.Instance.PlayPlayerMagic();
+        }
+        else
+        {
+            AudioManager.Instance.PlayEnemyMagic(transform.position);
+        }
     }
 
     public void SetHeadDamage(int damage)
