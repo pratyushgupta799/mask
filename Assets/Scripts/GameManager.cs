@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
     public int highestWave = 0;
     [SerializeField] private Image gameOverScreen;
+    [SerializeField] private Image startScreen;
 
     private void Awake()
     {
@@ -17,6 +18,23 @@ public class GameManager : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        StartGame();
+    }
+
+    private void StartGame()
+    {
+        Time.timeScale = 0;
+        startScreen.gameObject.SetActive(true);
+    }
+
+    public void PlayGame()
+    {
+        Debug.Log("Playing Game");
+        startScreen.gameObject.SetActive(false);
+        Time.timeScale = 1;
+        
+        Cursor.lockState = CursorLockMode.Locked;
     }
     
     public void Reload()

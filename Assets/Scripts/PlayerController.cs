@@ -79,8 +79,6 @@ public class PlayerController : MonoBehaviour
 
     void Awake()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        
         defaultMaskScale = ShootMask.transform.localScale.x;
         defaultMaskHeight = ShootMask.transform.localPosition.y;
     }
@@ -89,7 +87,6 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
-        Cursor.lockState = CursorLockMode.Locked;
         
         defaultMaskScale = ShootMask.transform.localScale.x;
         defaultMaskHeight = ShootMask.transform.localPosition.y;
