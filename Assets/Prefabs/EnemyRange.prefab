@@ -195,7 +195,7 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 8
-  timeBetweenAttacks: 1.5
+  timeBetweenAttacks: 2
   bulletPrefab: {fileID: 5423351745336262743, guid: d0732e5e3690f454396bfa9f4c1c7577, type: 3}
   bulletForwardForce: 25
   attackRange: 15

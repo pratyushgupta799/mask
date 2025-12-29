@@ -10,7 +10,7 @@ public class ProjectileBehaviour : MonoBehaviour
             if (other.tag == "Player")
             {
                 // Debug.Log("Player shot");
-                other.gameObject.GetComponent<PlayerHealth>().TakeDamage(20);
+                other.gameObject.GetComponent<PlayerHealth>().TakeDamage(10);
             }
             Invoke(nameof(DestroyObject), 0.1f);
         }
