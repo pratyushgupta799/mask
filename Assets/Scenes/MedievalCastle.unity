@@ -3533,7 +3533,7 @@ PrefabInstance:
       objectReference: {fileID: 956811772}
     - target: {fileID: 2247777541120649617, guid: d3f235d4c80611a4682af6951487d699, type: 3}
       propertyPath: moveSpeedRun
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2247777541120649617, guid: d3f235d4c80611a4682af6951487d699, type: 3}
       propertyPath: healPerSecond
