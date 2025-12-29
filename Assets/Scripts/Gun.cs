@@ -4,14 +4,13 @@ using UnityEngine;
 
 public class Gun : MonoBehaviour
 {
-    [SerializeField] private bool addBulletSpread = true;
-    [SerializeField] private Vector3 bulletSpreadVariance = new Vector3(0.1f, 0.1f, 0.1f);
     [SerializeField] private ParticleSystem shootingSystem;
     [SerializeField] private Transform bulletSpawnPoint;
     [SerializeField] private ParticleSystem impactParticleSystem;
     [SerializeField] private TrailRenderer bulletTrail;
     [SerializeField] private TrailRenderer bulletTrailThick;
     [SerializeField] private float shootDelay = 0.1f;
+    [SerializeField] private float shootDelayRun = 0.5f;
     [SerializeField] private LayerMask mask;
     [SerializeField] private Camera playerCamera;
     [SerializeField] private int shootDamage = 20;
@@ -38,7 +37,11 @@ public class Gun : MonoBehaviour
 
     private void Shoot()
     {
-        if (Time.time < lastShootTime + shootDelay) return;
+        if (playerController.GetCurrentMask() == PlayerController.Mask.Shoot)
+        {
+            if (Time.time < lastShootTime + shootDelay) return;
+        }
+        
         lastShootTime = Time.time;
 
         shootingSystem.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
@@ -102,22 +105,6 @@ public class Gun : MonoBehaviour
         }
 
         lastShootTime = Time.time;
-    }
-
-    private Vector3 GetDirection(Vector3 direction)
-    {
-        if (addBulletSpread)
-        {
-            direction += new Vector3(
-                Random.Range(-bulletSpreadVariance.x, bulletSpreadVariance.x),
-                Random.Range(-bulletSpreadVariance.y, bulletSpreadVariance.y),
-                Random.Range(-bulletSpreadVariance.z, bulletSpreadVariance.z)
-            );
-
-            direction.Normalize();
-        }
-
-        return direction;
     }
 
     private IEnumerator SpawnTrail(TrailRenderer trail, RaycastHit hit)

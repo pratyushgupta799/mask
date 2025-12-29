@@ -31,7 +31,7 @@ public class EnemyMeleeAI : Enemy
     private void Update()
     {
         Physics.CheckSphere(transform.position + Vector3.up, attackRange, playerLayer);
-        float dist = Vector3.Distance(transform.position, target.position);
+        float dist = Vector3.Distance(transform.position + Vector3.up, target.position);
 
         if (dist <= attackRange)
         {

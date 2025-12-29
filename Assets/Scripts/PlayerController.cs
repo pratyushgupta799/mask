@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask playerMask;
 
     [Header("Wall Run")] 
+    [SerializeField] private float wallRunTime = 3f;
     [SerializeField] float wallJumpUpForce = 6f;
     [SerializeField] float wallJumpSideForce = 3f;
     [SerializeField] private float wallRunForce = 6f;
@@ -47,6 +48,8 @@ public class PlayerController : MonoBehaviour
     private bool isWallRunning = false;
     private bool wallOnLeft;
     private bool wallOnRight;
+
+    private float currWallRunTimer = 0f;
 
     float xRotation = 0f;
     Rigidbody rb;
@@ -182,11 +185,16 @@ public class PlayerController : MonoBehaviour
 
     private void WallRun()
     {
-        if ((wallOnLeft || wallOnRight))
+        if ((wallOnLeft || wallOnRight) && (currWallRunTimer < wallRunTime))
         {
             // Debug.Log("Wall Spotted");
             if (!isGrounded && Input.GetAxis("Vertical") > 0.01f)
             {
+                if (!isWallRunning)
+                {
+                    currWallRunTimer = 0f;
+                }
+                currWallRunTimer += Time.deltaTime;
                 isWallRunning = true;
                 rb.useGravity = false;
 
@@ -201,6 +209,11 @@ public class PlayerController : MonoBehaviour
                     rb.linearVelocity.y,
                     moveAlongWall.z
                 );
+
+                if (currWallRunTimer >= wallRunTime)
+                {
+                    Invoke(nameof(ResetCurrentWallRunTime), 2f);
+                }
             }
             else
             {
@@ -301,5 +314,10 @@ public class PlayerController : MonoBehaviour
     public Mask GetCurrentMask()
     {
         return currentMask;
+    }
+
+    private void ResetCurrentWallRunTime()
+    {
+        currWallRunTimer = 0f;
     }
 }
