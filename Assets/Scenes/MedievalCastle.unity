@@ -1601,7 +1601,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1269120730060968, guid: 1a365141225c22e49a7bb976869b22a8, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4103333903944158, guid: 1a365141225c22e49a7bb976869b22a8, type: 3}
       propertyPath: m_LocalScale.x
@@ -1613,7 +1613,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4103333903944158, guid: 1a365141225c22e49a7bb976869b22a8, type: 3}
       propertyPath: m_LocalScale.z
-      value: 2.1200726
+      value: 1.1471502
       objectReference: {fileID: 0}
     - target: {fileID: 4103333903944158, guid: 1a365141225c22e49a7bb976869b22a8, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3541,7 +3541,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2247777541120649617, guid: d3f235d4c80611a4682af6951487d699, type: 3}
       propertyPath: moveSpeedShoot
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2247777541120649617, guid: d3f235d4c80611a4682af6951487d699, type: 3}
       propertyPath: playerMask.m_Bits
@@ -3565,7 +3565,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2964830299479391992, guid: d3f235d4c80611a4682af6951487d699, type: 3}
       propertyPath: shootDelay
-      value: 0.1
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 2964830299479391992, guid: d3f235d4c80611a4682af6951487d699, type: 3}
       propertyPath: yFrequency
@@ -5176,6 +5176,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e00ff617fde4594ca8358ffdcd03f59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  highestWave: 0
   gameOverScreen: {fileID: 1957506372}
 --- !u!4 &1740052670
 Transform:

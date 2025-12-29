@@ -13,6 +13,6 @@ public class GameOverScreen : MonoBehaviour
     {
         waveText.text = "Waves: " + waveManager.GetCurrentWave().ToString();
         killText.text = "Kills: " + waveManager.GetTotalKills().ToString();
-        highScoreText.text = "Highest Wave: " + PlayerPrefs.GetInt("waveHighScore", 0).ToString();
+        highScoreText.text = "Highest Wave: " + GameManager.Instance.highestWave.ToString();
     }
 }

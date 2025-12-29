@@ -45,9 +45,9 @@ public class WaveManager : MonoBehaviour
     private void StartNextWave()
     {
         waveIndex++;
-        if (waveIndex > PlayerPrefs.GetInt("waveHighScore"))
+        if (waveIndex > GameManager.Instance.highestWave)
         {
-            PlayerPrefs.SetInt("waveHighScore", waveIndex);
+            GameManager.Instance.highestWave = waveIndex;
         }
         StartCoroutine(SpawnWave());
     }

@@ -94,7 +94,7 @@ public class PlayerController : MonoBehaviour
 
     private void ReadMask()
     {
-        if (currentMask == Mask.Heal)
+        if (currentMask == Mask.Heal || currentMask == Mask.Run)
         {
             if (gun.activeInHierarchy)
             {

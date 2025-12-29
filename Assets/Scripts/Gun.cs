@@ -41,6 +41,10 @@ public class Gun : MonoBehaviour
         {
             if (Time.time < lastShootTime + shootDelay) return;
         }
+        else
+        {
+            if (Time.time < lastShootTime + shootDelayRun) return;
+        }
         
         lastShootTime = Time.time;
 

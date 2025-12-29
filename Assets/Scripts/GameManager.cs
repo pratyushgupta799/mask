@@ -5,11 +5,17 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+    public int highestWave = 0;
     [SerializeField] private Image gameOverScreen;
 
     private void Awake()
     {
-        PlayerPrefs.SetInt("waveHighScore", 0);
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+        Instance = this;
         DontDestroyOnLoad(gameObject);
     }
     
