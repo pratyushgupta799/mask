@@ -1,3 +1,4 @@
+using TMPro.SpriteAssetUtilities;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -22,6 +23,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float obstacleCheckDistance = 1f;
     [SerializeField] private LayerMask groundMask;
     [SerializeField] private LayerMask playerMask;
+
+    [Header("Mask UI")] 
+    [SerializeField] private GameObject ShootMask;
+    [SerializeField] private GameObject RunMask;
+    [SerializeField] private GameObject HealMask;
+    [SerializeField] private float maskSelectScale;
+    [SerializeField] private float maskSelectHeight;
 
     [Header("Wall Run")] 
     [SerializeField] private float wallRunTime = 3f;
@@ -63,9 +71,15 @@ public class PlayerController : MonoBehaviour
 
     private Mask currentMask;
 
+    private float defaultMaskScale;
+    private float defaultMaskHeight;
+
     void Awake()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        
+        defaultMaskScale = ShootMask.transform.localScale.x;
+        defaultMaskHeight = ShootMask.transform.localPosition.y;
     }
 
     void Start()
@@ -73,6 +87,9 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
         Cursor.lockState = CursorLockMode.Locked;
+        
+        defaultMaskScale = ShootMask.transform.localScale.x;
+        defaultMaskHeight = ShootMask.transform.localPosition.y;
 
         currentMask = Mask.Shoot;
         maskUI.text = "Mask: " + currentMask;
@@ -94,12 +111,27 @@ public class PlayerController : MonoBehaviour
 
     private void ReadMask()
     {
-        if (currentMask == Mask.Heal || currentMask == Mask.Run)
+        if (currentMask == Mask.Heal)
         {
             if (gun.activeInHierarchy)
             {
                 gun.SetActive(false);
             }
+            
+            MaskSelect(HealMask);
+            MaskDeSelect(RunMask);
+            MaskDeSelect(ShootMask);
+        }
+        else if (currentMask == Mask.Run)
+        {
+            if (gun.activeInHierarchy)
+            {
+                gun.SetActive(false);
+            }
+            
+            MaskDeSelect(HealMask);
+            MaskSelect(RunMask);
+            MaskDeSelect(ShootMask);
         }
         else
         {
@@ -107,6 +139,10 @@ public class PlayerController : MonoBehaviour
             {
                 gun.SetActive(true);
             }
+            
+            MaskDeSelect(HealMask);
+            MaskDeSelect(RunMask);
+            MaskSelect(ShootMask);
         }
     }
 
@@ -319,5 +355,19 @@ public class PlayerController : MonoBehaviour
     private void ResetCurrentWallRunTime()
     {
         currWallRunTimer = 0f;
+    }
+
+    private void MaskSelect(GameObject mask)
+    {
+        mask.transform.localScale = Vector3.one * maskSelectScale;
+        mask.transform.localPosition = new Vector3(mask.transform.localPosition.x, maskSelectHeight,
+            mask.transform.localPosition.z);
+    }
+    
+    private void MaskDeSelect(GameObject mask)
+    {
+        mask.transform.localScale = Vector3.one * defaultMaskScale;
+        mask.transform.localPosition = new Vector3(mask.transform.localPosition.x, defaultMaskHeight,
+            mask.transform.localPosition.z);
     }
 }
