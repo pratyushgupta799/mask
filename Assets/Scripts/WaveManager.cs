@@ -20,7 +20,7 @@ public class WaveManager : MonoBehaviour
     private bool waveSpawning;
 
     private int waveIndex = 0;
-    private int aliveEnemies = 0;
+    private readonly HashSet<Enemy> aliveEnemies = new();
 
     private int totalKills = 0;
 
@@ -41,7 +41,7 @@ public class WaveManager : MonoBehaviour
 
     private void Update()
     {
-        EnemyUI.text = "Alive: " + aliveEnemies;
+        EnemyUI.text = "Alive: " + aliveEnemies.Count;
     }
     
     private void StartNextWave()
@@ -59,12 +59,12 @@ public class WaveManager : MonoBehaviour
         waveSpawning = true;
         
         WaveUI.text = "Wave " + waveIndex;
-        EnemyUI.text = "Alive: " + aliveEnemies;
+        EnemyUI.text = "Alive: " + aliveEnemies.Count;
         int budget = waveSettings.baseBudget + waveIndex * waveSettings.budgetGrowth;
 
         while (budget > 0)
         {
-            if (aliveEnemies >= waveSettings.maxAlive)
+            if (aliveEnemies.Count >= waveSettings.maxAlive)
             {
                 yield return null;
                 continue;
@@ -75,7 +75,6 @@ public class WaveManager : MonoBehaviour
 
             Spawn(entry);
             budget -= entry.cost;
-            aliveEnemies++;
             
             yield return new WaitForSeconds(waveSettings.spawnDelay);
         }
@@ -86,16 +85,17 @@ public class WaveManager : MonoBehaviour
     private void Spawn(EnemyEntry entry)
     {
         Transform sp = spawnPoints[Random.Range(0, spawnPoints.Length)];
-        Instantiate(entry.prefab, sp.position, sp.rotation);
+        var enemy = Instantiate(entry.prefab, sp.position, sp.rotation).GetComponent<Enemy>();
+        aliveEnemies.Add(enemy);
     }
 
     private void OnEnemyKilled(Enemy enemy)
     {
-        aliveEnemies--;
+        aliveEnemies.Remove(enemy);
         totalKills++;
-        if (aliveEnemies <= 0 && !waveSpawning)
+        if (aliveEnemies.Count <= 0 && !waveSpawning)
         {
-            StartNextWave();
+            Invoke(nameof(StartNextWave), 3);
         }
     }
 
