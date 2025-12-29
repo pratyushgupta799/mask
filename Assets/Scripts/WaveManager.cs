@@ -17,6 +17,8 @@ public class WaveManager : MonoBehaviour
     [SerializeField] private Text WaveUI;
     [SerializeField] private Text EnemyUI;
 
+    private bool waveSpawning;
+
     private int waveIndex = 0;
     private int aliveEnemies = 0;
 
@@ -34,7 +36,10 @@ public class WaveManager : MonoBehaviour
     
     private void Start()
     {
-        StartNextWave();
+        if (aliveEnemies <= 0 && !waveSpawning)
+        {
+            StartNextWave();
+        }
     }
 
     private void Update()
@@ -54,6 +59,8 @@ public class WaveManager : MonoBehaviour
 
     private IEnumerator SpawnWave()
     {
+        waveSpawning = true;
+        
         WaveUI.text = "Wave " + waveIndex;
         EnemyUI.text = "Alive: " + aliveEnemies;
         int budget = waveSettings.baseBudget + waveIndex * waveSettings.budgetGrowth;
@@ -75,6 +82,8 @@ public class WaveManager : MonoBehaviour
             
             yield return new WaitForSeconds(waveSettings.spawnDelay);
         }
+        
+        waveSpawning = false;
     }
 
     private void Spawn(EnemyEntry entry)
