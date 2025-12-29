@@ -36,10 +36,7 @@ public class WaveManager : MonoBehaviour
     
     private void Start()
     {
-        if (aliveEnemies <= 0 && !waveSpawning)
-        {
-            StartNextWave();
-        }
+        StartNextWave();
     }
 
     private void Update()
@@ -96,7 +93,7 @@ public class WaveManager : MonoBehaviour
     {
         aliveEnemies--;
         totalKills++;
-        if (aliveEnemies <= 0)
+        if (aliveEnemies <= 0 && !waveSpawning)
         {
             StartNextWave();
         }
