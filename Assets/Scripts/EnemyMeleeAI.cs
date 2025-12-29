@@ -89,7 +89,7 @@ public class EnemyMeleeAI : Enemy
         
         if (!alreadyAttacked)
         {
-            target.GetComponent<PlayerHealth>().TakeDamage(40);
+            target.GetComponent<PlayerHealth>().TakeDamage(20);
             
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);

@@ -195,9 +195,9 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 8
-  timeBetweenAttacks: 2
+  timeBetweenAttacks: 1.5
   bulletPrefab: {fileID: 5423351745336262743, guid: d0732e5e3690f454396bfa9f4c1c7577, type: 3}
-  bulletForwardForce: 15
+  bulletForwardForce: 25
   attackRange: 15
   playerInAttackRange: 0
 --- !u!195 &1416673294432757778
@@ -210,7 +210,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 4
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120

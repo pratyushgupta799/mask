@@ -5189,9 +5189,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waveSettings:
-    baseBudget: 5
+    baseBudget: 3
     budgetGrowth: 3
-    maxAlive: 10
+    maxAlive: 500
     spawnDelay: 0.5
   enemies:
   - type: 0
@@ -5368,15 +5368,15 @@ PrefabInstance:
       objectReference: {fileID: 1937726790}
     - target: {fileID: 2247777541120649617, guid: d3f235d4c80611a4682af6951487d699, type: 3}
       propertyPath: moveSpeedRun
-      value: 10
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 2247777541120649617, guid: d3f235d4c80611a4682af6951487d699, type: 3}
       propertyPath: healPerSecond
-      value: 20
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2247777541120649617, guid: d3f235d4c80611a4682af6951487d699, type: 3}
       propertyPath: moveSpeedShoot
-      value: 10
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2247777541120649617, guid: d3f235d4c80611a4682af6951487d699, type: 3}
       propertyPath: maskSelectScale
@@ -5408,7 +5408,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2964830299479391992, guid: d3f235d4c80611a4682af6951487d699, type: 3}
       propertyPath: shootDelay
-      value: 0.2
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 2964830299479391992, guid: d3f235d4c80611a4682af6951487d699, type: 3}
       propertyPath: yFrequency
@@ -5423,6 +5423,10 @@ PrefabInstance:
       value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 2964830299479391992, guid: d3f235d4c80611a4682af6951487d699, type: 3}
+      propertyPath: shootDamage
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 2964830299479391992, guid: d3f235d4c80611a4682af6951487d699, type: 3}
       propertyPath: runDamageHead
       value: 20
       objectReference: {fileID: 0}
@@ -5430,6 +5434,10 @@ PrefabInstance:
       propertyPath: magicProjectile
       value: 
       objectReference: {fileID: 7427098749902792298, guid: 1c073f8f0039ea34ab131c63d6803496, type: 3}
+    - target: {fileID: 2964830299479391992, guid: d3f235d4c80611a4682af6951487d699, type: 3}
+      propertyPath: shootDamageHead
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 2964830299479391992, guid: d3f235d4c80611a4682af6951487d699, type: 3}
       propertyPath: bulletTrailThick
       value: 
