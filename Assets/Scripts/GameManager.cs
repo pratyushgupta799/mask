@@ -46,4 +46,13 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
+
+    public void PlayHurt()
+    {
+        UIController uiController = FindFirstObjectByType<UIController>();
+        if (uiController != null)
+        {
+            uiController.PlayHurt();
+        }
+    }
 }
