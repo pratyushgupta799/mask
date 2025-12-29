@@ -7,6 +7,7 @@ public class Gun : MonoBehaviour
     [SerializeField] private ParticleSystem shootingSystem;
     [SerializeField] private Transform bulletSpawnPoint;
     [SerializeField] private ParticleSystem impactParticleSystem;
+    [SerializeField] private ParticleSystem bloodParticleSystem;
     [SerializeField] private TrailRenderer bulletTrail;
     [SerializeField] private TrailRenderer bulletTrailThick;
     [SerializeField] private float shootDelay = 0.1f;
@@ -37,6 +38,7 @@ public class Gun : MonoBehaviour
 
     private void Shoot()
     {
+        bool enemyHit = false;
         if (playerController.GetCurrentMask() == PlayerController.Mask.Shoot)
         {
             if (Time.time < lastShootTime + shootDelay) return;
@@ -81,6 +83,8 @@ public class Gun : MonoBehaviour
                     {
                         enemy.TakeDamage(runDamageHead);
                     }
+
+                    enemyHit = true;
                 }
             }
             else if (camHit.collider.gameObject.CompareTag("Body"))
@@ -96,13 +100,21 @@ public class Gun : MonoBehaviour
                     {
                         enemy.TakeDamage(runDamage);
                     }
+
+                    enemyHit = true;
                 }
             }
+            else
+            {
+                enemyHit = false;
+            }
             
-            StartCoroutine(SpawnTrail(trail, camHit));
+            StartCoroutine(SpawnTrail(trail, camHit, enemyHit));
         }
         else
         {
+            enemyHit = false;
+            
             targetPoint = camRay.origin + camRay.direction * 100f;
             trail = Instantiate(trailType, bulletSpawnPoint.position, Quaternion.identity);
             StartCoroutine(SpawnTrail(trail, targetPoint));
@@ -111,12 +123,13 @@ public class Gun : MonoBehaviour
         lastShootTime = Time.time;
     }
 
-    private IEnumerator SpawnTrail(TrailRenderer trail, RaycastHit hit)
+    private IEnumerator SpawnTrail(TrailRenderer trail, RaycastHit hit, bool enemyIsHit)
     {
+        Debug.Log("Something hit");
         float time = 0;
         Vector3 startPosition = trail.transform.position;
 
-        while (time < 1000f)
+        while (time < 1f)
         {
             trail.transform.position = Vector3.Lerp(startPosition, hit.point, time);
             time += Time.deltaTime / trail.time;
@@ -124,7 +137,16 @@ public class Gun : MonoBehaviour
             yield return null;
         }
         trail.transform.position = hit.point;
-        Instantiate(impactParticleSystem, hit.point, Quaternion.LookRotation(hit.normal));
+        if (enemyIsHit)
+        {
+            Debug.Log("Enemy hit");
+            var bloodSplash = Instantiate(bloodParticleSystem, hit.point, Quaternion.LookRotation(hit.normal));
+            bloodSplash.Play();
+        }
+        else
+        {
+            Instantiate(impactParticleSystem, hit.point, Quaternion.LookRotation(hit.normal));
+        }
         
         Destroy(trail.gameObject, trail.time);
     }
