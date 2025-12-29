@@ -33,11 +33,13 @@ public class AudioManager : MonoBehaviour
     public void PlayEnemyMagic(Vector3 position)
     {
         AudioSource.PlayClipAtPoint(enemyMagic, position);
+        sfxSource.PlayOneShot(enemyMagic);
     }
     
     public void PlayGhostDeath(Vector3 position)
     {
         AudioSource.PlayClipAtPoint(ghostDeath, position);
+        sfxSource.PlayOneShot(ghostDeath);
     }
     
     public void PlayPlayerHurt()
