@@ -5383,6 +5383,10 @@ PrefabInstance:
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 2247777541120649617, guid: d3f235d4c80611a4682af6951487d699, type: 3}
+      propertyPath: wallJumpUpForce
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2247777541120649617, guid: d3f235d4c80611a4682af6951487d699, type: 3}
       propertyPath: maskSelectHeight
       value: -0.29
       objectReference: {fileID: 0}
