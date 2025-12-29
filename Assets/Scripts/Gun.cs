@@ -1,23 +1,20 @@
 using System.Collections;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 
 public class Gun : MonoBehaviour
 {
     [SerializeField] private ParticleSystem shootingSystem;
     [SerializeField] private Transform bulletSpawnPoint;
+    [SerializeField] private GameObject magicProjectile;
     [SerializeField] private ParticleSystem impactParticleSystem;
     [SerializeField] private ParticleSystem bloodParticleSystem;
-    [SerializeField] private TrailRenderer bulletTrail;
-    [SerializeField] private TrailRenderer bulletTrailThick;
     [SerializeField] private float shootDelay = 0.1f;
-    [SerializeField] private float shootDelayRun = 0.5f;
     [SerializeField] private LayerMask mask;
     [SerializeField] private Camera playerCamera;
     [SerializeField] private int shootDamage = 20;
     [SerializeField] private int shootDamageHead = 60;
-    [SerializeField] private int runDamage = 10;
-    [SerializeField] private int runDamageHead = 30;
     [SerializeField] private PlayerController playerController;
 
     private float lastShootTime;
@@ -38,134 +35,29 @@ public class Gun : MonoBehaviour
 
     private void Shoot()
     {
-        bool enemyHit = false;
-        if (playerController.GetCurrentMask() == PlayerController.Mask.Shoot)
-        {
-            if (Time.time < lastShootTime + shootDelay) return;
-        }
-        else
-        {
-            if (Time.time < lastShootTime + shootDelayRun) return;
-        }
+        if (lastShootTime + shootDelay > Time.time) return;
         
-        lastShootTime = Time.time;
-
-        shootingSystem.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
-        shootingSystem.Play();
-
-        Ray camRay = playerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f));
-        Vector3 targetPoint;
-        TrailRenderer trailType;
-        if (playerController.GetCurrentMask() == PlayerController.Mask.Shoot)
-        {
-            trailType = bulletTrailThick;
-        }
-        else
-        {
-            trailType = bulletTrail;
-        }
-        TrailRenderer trail;
-
+        var camRay = playerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f));
+        
         if (Physics.Raycast(camRay, out RaycastHit camHit, 1000f, mask))
         {
-            trail = Instantiate(trailType, bulletSpawnPoint.position, Quaternion.identity);
-            
-            if (camHit.collider.gameObject.CompareTag("Head"))
-            {
-                Enemy enemy = camHit.collider.gameObject.GetComponentInParent<Enemy>();
-                if (enemy != null)
-                {
-                    if (playerController.GetCurrentMask() == PlayerController.Mask.Shoot)
-                    {
-                        enemy.TakeDamage(shootDamageHead);
-                    }
-                    else
-                    {
-                        enemy.TakeDamage(runDamageHead);
-                    }
-
-                    enemyHit = true;
-                }
-            }
-            else if (camHit.collider.gameObject.CompareTag("Body"))
-            {
-                Enemy enemy = camHit.collider.gameObject.GetComponentInParent<Enemy>();
-                if (enemy != null)
-                {
-                    if (playerController.GetCurrentMask() == PlayerController.Mask.Shoot)
-                    {
-                        enemy.TakeDamage(shootDamage);
-                    }
-                    else
-                    {
-                        enemy.TakeDamage(runDamage);
-                    }
-
-                    enemyHit = true;
-                }
-            }
-            else
-            {
-                enemyHit = false;
-            }
-            
-            StartCoroutine(SpawnTrail(trail, camHit, enemyHit));
+            Vector3 dir = (camHit.point - bulletSpawnPoint.position).normalized;
+            var bullet = Instantiate(magicProjectile, bulletSpawnPoint.position, Quaternion.identity);
+            bullet.gameObject.GetComponent<MagicProjectile>().SetDirection(dir);
+            bullet.gameObject.GetComponent<MagicProjectile>().SetHeadDamage(shootDamageHead);
+            bullet.gameObject.GetComponent<MagicProjectile>().SetBodyDamage(shootDamage);
         }
         else
         {
-            enemyHit = false;
+            var bullet = Instantiate(
+                magicProjectile,
+                bulletSpawnPoint.position,
+                playerCamera.transform.rotation
+            );
             
-            targetPoint = camRay.origin + camRay.direction * 100f;
-            trail = Instantiate(trailType, bulletSpawnPoint.position, Quaternion.identity);
-            StartCoroutine(SpawnTrail(trail, targetPoint));
+            bullet.gameObject.GetComponent<MagicProjectile>().SetDirection(playerCamera.transform.forward);
         }
 
         lastShootTime = Time.time;
-    }
-
-    private IEnumerator SpawnTrail(TrailRenderer trail, RaycastHit hit, bool enemyIsHit)
-    {
-        Debug.Log("Something hit");
-        float time = 0;
-        Vector3 startPosition = trail.transform.position;
-
-        while (time < 1f)
-        {
-            trail.transform.position = Vector3.Lerp(startPosition, hit.point, time);
-            time += Time.deltaTime / trail.time;
-            
-            yield return null;
-        }
-        trail.transform.position = hit.point;
-        if (enemyIsHit)
-        {
-            Debug.Log("Enemy hit");
-            var bloodSplash = Instantiate(bloodParticleSystem, hit.point, Quaternion.LookRotation(hit.normal));
-            // bloodSplash.Play();
-        }
-        else
-        {
-            Instantiate(impactParticleSystem, hit.point, Quaternion.LookRotation(hit.normal));
-        }
-        
-        Destroy(trail.gameObject, trail.time);
-    }
-    
-    private IEnumerator SpawnTrail(TrailRenderer trail, Vector3 targetPoint)
-    {
-        float timeToTravel = Vector3.Distance(bulletSpawnPoint.position, targetPoint) / 500f;
-        float time = 0;
-        Vector3 startPosition = trail.transform.position;
-
-        while (time < timeToTravel)
-        {
-            trail.transform.position = Vector3.Lerp(startPosition, targetPoint, time);
-            time += Time.deltaTime / trail.time;
-            
-            yield return null;
-        }
-        trail.transform.position = targetPoint;
-        
-        Destroy(trail.gameObject, trail.time);
     }
 }
