@@ -46,6 +46,7 @@ public class Gun : MonoBehaviour
             bullet.gameObject.GetComponent<MagicProjectile>().SetDirection(dir);
             bullet.gameObject.GetComponent<MagicProjectile>().SetHeadDamage(shootDamageHead);
             bullet.gameObject.GetComponent<MagicProjectile>().SetBodyDamage(shootDamage);
+            bullet.gameObject.GetComponent<MagicProjectile>().SetPlayerBullet(true);
         }
         else
         {
@@ -56,6 +57,9 @@ public class Gun : MonoBehaviour
             );
             
             bullet.gameObject.GetComponent<MagicProjectile>().SetDirection(playerCamera.transform.forward);
+            bullet.gameObject.GetComponent<MagicProjectile>().SetHeadDamage(shootDamageHead);
+            bullet.gameObject.GetComponent<MagicProjectile>().SetBodyDamage(shootDamage);
+            bullet.gameObject.GetComponent<MagicProjectile>().SetPlayerBullet(true);
         }
 
         lastShootTime = Time.time;

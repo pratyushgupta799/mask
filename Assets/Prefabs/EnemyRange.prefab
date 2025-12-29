@@ -198,6 +198,8 @@ MonoBehaviour:
   timeBetweenAttacks: 2
   bulletPrefab: {fileID: 5423351745336262743, guid: d0732e5e3690f454396bfa9f4c1c7577, type: 3}
   bulletForwardForce: 25
+  magicProjectile: {fileID: 75070716866530985, guid: 6bd266b996d5e03479a0589c7116209f, type: 3}
+  damage: 10
   attackRange: 15
   playerInAttackRange: 0
 --- !u!195 &1416673294432757778

@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -12,6 +13,8 @@ public class EnemyRangeAI : Enemy
     [SerializeField] private float timeBetweenAttacks;
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private float bulletForwardForce = 20f;
+    [SerializeField] private GameObject magicProjectile;
+    [SerializeField] private int damage = 10;
     
     [Header("States")]
     [SerializeField] private float attackRange;
@@ -63,10 +66,15 @@ public class EnemyRangeAI : Enemy
 
         if (!alreadyAttacked)
         {
-            Rigidbody rb = Instantiate(bulletPrefab, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
-
-            rb.useGravity = false;
-            rb.AddForce(transform.forward * bulletForwardForce, ForceMode.Impulse);
+            var bullet = Instantiate(
+                magicProjectile,
+                transform.position,
+                Quaternion.identity
+            );
+            
+            bullet.gameObject.GetComponent<MagicProjectile>().SetDirection(transform.forward);
+            bullet.gameObject.GetComponent<MagicProjectile>().SetPlayerDamage(damage);
+            bullet.gameObject.GetComponent<MagicProjectile>().SetPlayerBullet(false);
             
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);

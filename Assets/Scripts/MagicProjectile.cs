@@ -7,7 +7,21 @@ public class MagicProjectile : MonoBehaviour
 
     private int headDamage;
     private int bodyDamage;
+    private int playerDamage;
+    
     private Vector3 direction;
+
+    private bool isPlayerBullet;
+
+    public void SetPlayerDamage(int damage)
+    {
+        playerDamage = damage;
+    }
+
+    public void SetPlayerBullet(bool value)
+    {
+        isPlayerBullet = value;
+    }
 
     public void SetHeadDamage(int damage)
     {
@@ -41,15 +55,28 @@ public class MagicProjectile : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Projectile") return;
-        
-        if (other.tag == "Head")
+        if (!isPlayerBullet && other.GetComponentInParent<Enemy>() != null)
+            return;
+
+        if (isPlayerBullet)
         {
-            other.gameObject.GetComponentInParent<Enemy>().TakeDamage(headDamage);
+            if (other.tag == "Head")
+            {
+                other.gameObject.GetComponentInParent<Enemy>().TakeDamage(headDamage);
+            }
+            else if (other.tag == "Body")
+            {
+                other.gameObject.GetComponentInParent<Enemy>().TakeDamage(bodyDamage);
+            }
         }
-        else if (other.tag == "Body")
+        else
         {
-            other.gameObject.GetComponentInParent<Enemy>().TakeDamage(bodyDamage);
+            if (other.tag == "Player")
+            {
+                other.gameObject.GetComponent<PlayerHealth>().TakeDamage(playerDamage);
+            }
         }
+
         Destroy(gameObject);
     }
 }
