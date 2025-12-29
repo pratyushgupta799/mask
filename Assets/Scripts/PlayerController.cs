@@ -331,7 +331,7 @@ public class PlayerController : MonoBehaviour
                 
                 jumpCount++;
             }
-            else if (isGrounded || jumpCount < 1)
+            else if (isGrounded)
             {
                 rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
                 jumpCount++;
