@@ -221,7 +221,7 @@ public class PlayerController : MonoBehaviour
 
     private void WallRun()
     {
-        if ((wallOnLeft || wallOnRight) && (currWallRunTimer < wallRunTime))
+        if ((wallOnLeft || wallOnRight) && (currWallRunTimer < wallRunTime) && (currentMask != Mask.Heal))
         {
             // Debug.Log("Wall Spotted");
             if (!isGrounded && Input.GetAxis("Vertical") > 0.01f)
