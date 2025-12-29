@@ -111,7 +111,7 @@ public class PlayerController : MonoBehaviour
         PlayerJump();
         Heal();
 
-        if (Math.Abs(rb.linearVelocity.x) + Math.Abs(rb.angularVelocity.z) > 0.1f)
+        if (Math.Abs(rb.linearVelocity.x) + Math.Abs(rb.angularVelocity.z) > 0.1f && isGrounded)
         {
             if (!isMoving)
             {
