@@ -141,7 +141,7 @@ public class Gun : MonoBehaviour
         {
             Debug.Log("Enemy hit");
             var bloodSplash = Instantiate(bloodParticleSystem, hit.point, Quaternion.LookRotation(hit.normal));
-            bloodSplash.Play();
+            // bloodSplash.Play();
         }
         else
         {
