@@ -9,11 +9,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Image gameOverScreen;
     [SerializeField] private Image startScreen;
 
+    private Button playAgainButton;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
         {
-            Destroy(this.gameObject);
+            Destroy(gameObject);
             return;
         }
         Instance = this;
@@ -40,7 +42,8 @@ public class GameManager : MonoBehaviour
     public void Reload()
     {
         gameOverScreen = GameObject.FindGameObjectWithTag("GameOverScreen").GetComponent<Image>();
-        gameOverScreen.gameObject.SetActive(true);   
+        gameOverScreen.gameObject.SetActive(true);
+        Cursor.lockState = CursorLockMode.Locked;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
