@@ -6746,8 +6746,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waveSettings:
-    baseBudget: 3
-    budgetGrowth: 1
+    baseBudget: 5
+    budgetGrowth: 2
     maxAlive: 500
     spawnDelay: 0.5
   enemies:
